@@ -20,10 +20,15 @@ def extract_bgen_region(bgen_file, region):
   stderr_lower = stderr.lower()
   if 'error' in stderr_lower or 'fail' in stderr_lower:
     sys.stderr.write(stderr)
+    sys.stderr.write("\n")
     raise Exception(f"An error occurred while reading from qctool. The error message is printed above.")
 
 if __name__ == "__main__":
   # This loops over each line in the bgen file within a region and prints the first few elements.
   # Note the chromosome is "01" (this is apparently what is used in the bgen file). 
   for line in extract_bgen_region("example.v11.bgen", "01:1-15000"):
+    print(line.split()[0:9])
+
+  # Example of what happens if the file is bad
+  for line in extract_bgen_region("bad.bgen", "01:1-15000"):
     print(line.split()[0:9])
